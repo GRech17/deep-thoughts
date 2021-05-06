@@ -15,6 +15,15 @@ import Signup from './pages/Signup';
 import Home from './pages/Home';
 
 const client = new ApolloClient({
+  request: operations => {
+    const token = localStorage.getItem('id_token');
+
+    operations.setContext({
+      headers: {
+        authorization: token ? `Bearer ${token}`  : ''
+      }
+    });
+  },
   uri: '/graphql'
 });
 
